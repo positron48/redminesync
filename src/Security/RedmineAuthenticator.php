@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\RedmineUser;
+use App\Service\Redmine;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,12 +28,14 @@ class RedmineAuthenticator extends AbstractFormLoginAuthenticator
     private $entityManager;
     private $urlGenerator;
     private $csrfTokenManager;
+    private $redmine;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager)
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, Redmine $redmine)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
+        $this->redmine = $redmine;
     }
 
     public function supports(Request $request)
@@ -75,10 +78,16 @@ class RedmineAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo: login to redmine and create user if still not
-        // Check the user's password or other credentials and return true or false
-        // If there are no credentials to check, you can just return true
-        throw new \Exception('TODO: check the credentials inside '.__FILE__);
+        if($userData = $this->redmine->getUserData($credentials['username'], $credentials['password'])){
+            /** @var RedmineUser $user */
+            $user->setName(trim(implode(' ', array_filter([$userData['user']['lastname'], $userData['user']['firstname']]))));
+            $user->setToken($userData['user']['api_key']);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            return true;
+        }
+
+        return false;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
