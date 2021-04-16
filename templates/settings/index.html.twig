@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SettingsController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Settings</h1>
+
+    <table>
+        <tr>
+            <td>login</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <td>redmine token</td>
+            <td>
+                {% if user.token %}
+                    <span style="color: green;">{{ user.token }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>external redmine token</td>
+            <td>
+                {% if user.externalRedmineToken %}
+                    <span style="color: green;">{{ user.externalRedmineToken }}</span>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    {{ form(form) }}
+</div>
+{% endblock %}

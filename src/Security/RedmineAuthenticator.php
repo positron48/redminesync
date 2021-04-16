@@ -86,7 +86,6 @@ class RedmineAuthenticator extends AbstractFormLoginAuthenticator
             $this->entityManager->flush();
             return true;
         }
-
         return false;
     }
 
@@ -96,7 +95,7 @@ class RedmineAuthenticator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('about'));
+        return new RedirectResponse($this->urlGenerator->generate('index'));
     }
 
     protected function getLoginUrl()

@@ -38,6 +38,11 @@ class RedmineUser implements UserInterface
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $externalRedmineToken;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +133,18 @@ class RedmineUser implements UserInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getExternalRedmineToken(): ?string
+    {
+        return $this->externalRedmineToken;
+    }
+
+    public function setExternalRedmineToken(?string $externalRedmineToken): self
+    {
+        $this->externalRedmineToken = $externalRedmineToken;
 
         return $this;
     }
