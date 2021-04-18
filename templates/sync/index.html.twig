@@ -9,12 +9,79 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if newIssue %}
+        <p style="color: green;">
+            Создана задача <a target="_blank" href="{{ newIssue.url }}">{{ newIssue.url }}</a>
+        </p>
+    {% endif %}
+    {% if issue %}
+        <table>
+            <tr>
+                <td>title</td>
+                <td>{{ issue.subject }}</td>
+            </tr>
+            <tr>
+                <td>status</td>
+                <td>{{ issue.status.name }}</td>
+            </tr>
+            <tr>
+                <td>project</td>
+                <td>{{ issue.project.name }}</td>
+            </tr>
+            <tr>
+                <td>tracker</td>
+                <td>{{ issue.tracker.name }}</td>
+            </tr>
+            <tr>
+                <td>priority</td>
+                <td>{{ issue.priority.name }}</td>
+            </tr>
+            <tr>
+                <td>author</td>
+                <td>{{ issue.author.name }}</td>
+            </tr>
+            <tr>
+                <td>assigned_to</td>
+                <td>{{ issue.assigned_to.name }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <pre>
+                    {{
+                        issue.description|length > 500 ?
+                        issue.description|slice(0, 500) ~ '...' :
+                        issue.description
+                    }}
+                    </pre>
+                </td>
+            </tr>
+        </table>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/mnt/f/my/web/redminesync/src/Controller/SyncController.php'|file_link(0) }}">src/Controller/SyncController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/mnt/f/my/web/redminesync/templates/sync/index.html.twig'|file_link(0) }}">templates/sync/index.html.twig</a></code></li>
-    </ul>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {{ form_start(form) }}
+
+
+    <h4>Clone issue</h4>
+    {% if form.issue.vars.value %}
+        <div style="display: none;">
+            {{ form_row(form.issue) }}
+        </div>
+        {{ form_row(form.tracker) }}
+        {{ form_row(form.project) }}
+    {% else %}
+        {{ form_row(form.issue) }}
+        <div style="display: none;">
+            {{ form_row(form.tracker) }}
+            {{ form_row(form.project) }}
+        </div>
+    {% endif %}
+
+    {{ form_row(form.submit) }}
+
+    {{ form_end(form) }}
 </div>
 {% endblock %}

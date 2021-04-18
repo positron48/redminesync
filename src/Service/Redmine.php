@@ -25,4 +25,112 @@ class Redmine
         $redmine = new \Redmine\Client($primaryRedmine ? $this->url : $this->externalUrl, $username, $password);
         return $redmine->user->getCurrentUser();
     }
+
+    public function getDictionaries($token)
+    {
+        $redmine = new \Redmine\Client($this->url, $token);
+        $projects = self::getProjects($redmine);
+        $trackers = self::getTrackers($redmine);
+        $statuses = self::getStatuses($redmine);
+
+        return compact('projects', 'trackers', 'statuses');
+    }
+
+    public function getExernalIssueData($issueId, $externalRedmineToken)
+    {
+        $redmine = new \Redmine\Client($this->externalUrl, $externalRedmineToken);
+        $issue = $redmine->issue->show($issueId, [
+            'include' => ['attachments']
+        ]);
+        $issue = isset($issue['issue']) ? $issue['issue'] : null;
+        if($issue) {
+            $issue['url'] = $this->externalUrl . "/issues/" . $issueId;
+        }
+        return $issue;
+    }
+
+    public function createIssue($issue, $token, $externalRedmineToken)
+    {
+        $redmine = new \Redmine\Client($this->url, $token);
+
+        $uploads = [];
+        foreach ($issue['attachments'] as $attachment) {
+            $item = [
+                'filename' => $attachment['filename'],
+                'content_type' => $attachment['content_type'],
+                'description' => $attachment['description']
+            ];
+
+            $attachment['content_url'] .= '?key=' . $externalRedmineToken;
+            $upload = $redmine->attachment->upload(
+                file_get_contents($attachment['content_url'])
+            );
+
+            if($upload[0] === '{'){
+                $upload = json_decode($upload, true);
+            }
+
+            if(isset($upload['upload'])){
+                $item['token'] = $upload['upload']['token'];
+                $uploads[] = $item;
+            }
+        }
+
+        if(count($uploads)) {
+            $issue['uploads'] = $uploads;
+            unset($issue['attachments']);
+        }
+
+        $newIssue = $redmine->issue->create($issue);
+
+        $con = json_encode($newIssue);
+        $newIssue = json_decode($con, true);
+
+        if(isset($newIssue['id'])) {
+            $newIssue['url'] = $this->url . "/issues/" . $newIssue['id'];
+        }
+        return $newIssue ?? [];
+    }
+
+    /**
+     * @param \Redmine\Client $redmine
+     * @return array
+     */
+    protected static function getProjects(\Redmine\Client $redmine): array
+    {
+        $projects = $redmine->project->all(['limit' => 200]);
+        $projects = array_combine(
+            array_column($projects['projects'], 'name'),
+            array_column($projects['projects'], 'id')
+        );
+        return $projects;
+    }
+
+    /**
+     * @param \Redmine\Client $redmine
+     * @return array
+     */
+    protected static function getTrackers(\Redmine\Client $redmine): array
+    {
+        $trackers = $redmine->tracker->all();
+        $trackers = array_combine(
+            array_column($trackers['trackers'], 'name'),
+            array_column($trackers['trackers'], 'id')
+        );
+        return $trackers;
+    }
+
+    /**
+     * @param \Redmine\Client $redmine
+     * @return array
+     */
+    protected static function getStatuses(\Redmine\Client $redmine): array
+    {
+        $data = $redmine->issue_status->all();
+        $data = array_combine(
+            array_column($data['issue_statuses'], 'name'),
+            array_column($data['issue_statuses'], 'id')
+        );
+        return $data;
+    }
 }
