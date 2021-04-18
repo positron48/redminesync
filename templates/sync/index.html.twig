@@ -11,7 +11,7 @@
 
 {% if newIssue %}
     <p style="color: green;">
-        {% trans %}Создана задача{% endtrans %} <a target="_blank" href="{{ newIssue.url }}">{{ newIssue.url }}</a>
+        {% trans %}Создана задача{% endtrans %} <a target="_blank" href="{{ newIssue.url }}">#{{ newIssue.id }} {{ issue.subject }}</a>
     </p>
 {% endif %}
 {% if issue %}
@@ -21,7 +21,7 @@
                 <tr>
                     <td colspan="2">
                         <b>
-                            <a target="_blank" href="{{ issue.url }}">{{ issue.subject }}</a>
+                            <a target="_blank" href="{{ issue.url }}">#{{ issue.id }} {{ issue.subject }}</a>
                         </b>
                     </td>
                 </tr>
@@ -77,11 +77,15 @@
         </div>
         {{ form_row(form.tracker) }}
         {{ form_row(form.project) }}
+        {{ form_row(form.status) }}
+        {{ form_row(form.employer) }}
     {% else %}
         {{ form_row(form.issue) }}
         <div style="display: none;">
             {{ form_row(form.tracker) }}
             {{ form_row(form.project) }}
+            {{ form_row(form.status) }}
+            {{ form_row(form.employer) }}
         </div>
     {% endif %}
 

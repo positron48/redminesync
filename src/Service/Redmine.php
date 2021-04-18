@@ -32,8 +32,9 @@ class Redmine
         $projects = self::getProjects($redmine);
         $trackers = self::getTrackers($redmine);
         $statuses = self::getStatuses($redmine);
+        $employers = self::getEmployers($redmine, $projects['Multisite']);
 
-        return compact('projects', 'trackers', 'statuses');
+        return compact('projects', 'trackers', 'statuses', 'employers');
     }
 
     public function getExernalIssueData($issueId, $externalRedmineToken)
@@ -98,12 +99,13 @@ class Redmine
      */
     protected static function getProjects(\Redmine\Client $redmine): array
     {
-        $projects = $redmine->project->all(['limit' => 200]);
-        $projects = array_combine(
-            array_column($projects['projects'], 'name'),
-            array_column($projects['projects'], 'id')
+        $data = $redmine->project->all(['limit' => 200]);
+        $data = array_combine(
+            array_column($data['projects'], 'name'),
+            array_column($data['projects'], 'id')
         );
-        return $projects;
+        ksort($data);
+        return $data;
     }
 
     /**
@@ -112,12 +114,13 @@ class Redmine
      */
     protected static function getTrackers(\Redmine\Client $redmine): array
     {
-        $trackers = $redmine->tracker->all();
-        $trackers = array_combine(
-            array_column($trackers['trackers'], 'name'),
-            array_column($trackers['trackers'], 'id')
+        $data = $redmine->tracker->all();
+        $data = array_combine(
+            array_column($data['trackers'], 'name'),
+            array_column($data['trackers'], 'id')
         );
-        return $trackers;
+        ksort($data);
+        return $data;
     }
 
     /**
@@ -131,6 +134,21 @@ class Redmine
             array_column($data['issue_statuses'], 'name'),
             array_column($data['issue_statuses'], 'id')
         );
+        ksort($data);
         return $data;
+    }
+
+    /**
+     * @param \Redmine\Client $redmine
+     * @return array
+     */
+    protected static function getEmployers(\Redmine\Client $redmine, $projectId): array
+    {
+        $data = $redmine->membership->all($projectId);
+        foreach ($data['memberships'] as $membership) {
+            $result[$membership['user']['name']] = $membership['user']['id'];
+        }
+        ksort($result);
+        return $result;
     }
 }

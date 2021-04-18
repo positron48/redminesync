@@ -4,6 +4,7 @@ Choose a project: Выберите проект
 Choose a tracker: Выберите трекер
 Clone issue: Копирование задачи
 Clone: Копирование
+Employer: Назначена
 External issue link or id: Номер задачи или ссылка
 External redmine login: Имя пользователя внешнего редмайна
 external redmine token: Пароль внешнего редмайна
@@ -18,6 +19,7 @@ redmine token: Токен
 Settings: Настройки
 Sign in: Вход
 status: Статус
+Status: Статус
 Submit: Отправить
 title: Название
 Tracker: Трекер

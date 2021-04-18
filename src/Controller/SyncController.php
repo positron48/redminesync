@@ -50,11 +50,14 @@ class SyncController extends AbstractController
                             $newIssue = [
                                 'tracker_id' => $formData['tracker'],
                                 'project_id' => $formData['project'],
-                                'status_id' => $dictionaries['statuses']['Новый'],
+                                'status_id' => $formData['status'],
                                 'subject' => $issue['subject'],
                                 'description' => "Задача: " . $issue['url'] . "\r\n\r\n" .
                                     $issue['description']
                             ];
+                            if($formData['employer'] > 0){
+                                $newIssue['assigned_to_id'] = $formData['employer'];
+                            }
                             if($issue['attachments']){
                                 $newIssue['attachments'] = $issue['attachments'];
                             }
@@ -76,6 +79,10 @@ class SyncController extends AbstractController
                             $formData['project'] = isset($dictionaries['projects']['Multisite']) ?
                                 $dictionaries['projects']['Multisite'] :
                                 null;
+                            $formData['status'] = isset($dictionaries['statuses']['Новый']) ?
+                                $dictionaries['statuses']['Новый'] :
+                                null;
+                            $formData['employer'] = null;
 
                             $form = $this->createForm(CloneIssueType::class, $formData, $dictionaries);
                         }

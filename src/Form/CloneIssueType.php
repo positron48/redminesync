@@ -31,6 +31,15 @@ class CloneIssueType extends AbstractType
                 'placeholder' => 'Choose a project',
                 'required' => false
             ])
+            ->add('status', ChoiceType::class, [
+                'choices' => $options['statuses'],
+                'required' => false
+            ])
+            ->add('employer', ChoiceType::class, [
+                'choices' => $options['employers'],
+                'placeholder' => '-',
+                'required' => false
+            ])
             ->add('submit', SubmitType::class)
         ;
     }
@@ -41,6 +50,7 @@ class CloneIssueType extends AbstractType
             'trackers' => [],
             'projects' => [],
             'statuses' => [],
+            'employers' => [],
         ]);
     }
 }
