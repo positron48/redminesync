@@ -7,6 +7,7 @@ use App\Form\SettingsType;
 use App\Service\Redmine;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class SettingsController extends AbstractController
     /**
      * @Route("/settings", name="settings")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager, Redmine $redmine): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, Redmine $redmine, ContainerBagInterface $containerBag): Response
     {
         /** @var RedmineUser $user */
         $user = $this->getUser();
@@ -25,7 +26,7 @@ class SettingsController extends AbstractController
         }
 
         $settings = [
-            'login' => $user->getUsername(),
+            'login' => '',
             'password' => '',
         ];
         $form = $this->createForm(SettingsType::class, $settings);
@@ -49,7 +50,8 @@ class SettingsController extends AbstractController
         return $this->render('settings/index.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-            'error' => $error
+            'error' => $error,
+            'externalRedmineUrl' => $containerBag->get("external_redmine_url")
         ]);
     }
 }

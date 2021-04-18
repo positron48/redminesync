@@ -1,71 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SyncController!{% endblock %}
+{% block title %}{% trans %}Clone issue{% endtrans %}{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .issue-table td:first-child {
+        padding-right: 20px;
+    }
 </style>
 
-<div class="example-wrapper">
-    {% if newIssue %}
-        <p style="color: green;">
-            Создана задача <a target="_blank" href="{{ newIssue.url }}">{{ newIssue.url }}</a>
-        </p>
-    {% endif %}
-    {% if issue %}
-        <table>
-            <tr>
-                <td>title</td>
-                <td>{{ issue.subject }}</td>
-            </tr>
-            <tr>
-                <td>status</td>
-                <td>{{ issue.status.name }}</td>
-            </tr>
-            <tr>
-                <td>project</td>
-                <td>{{ issue.project.name }}</td>
-            </tr>
-            <tr>
-                <td>tracker</td>
-                <td>{{ issue.tracker.name }}</td>
-            </tr>
-            <tr>
-                <td>priority</td>
-                <td>{{ issue.priority.name }}</td>
-            </tr>
-            <tr>
-                <td>author</td>
-                <td>{{ issue.author.name }}</td>
-            </tr>
-            <tr>
-                <td>assigned_to</td>
-                <td>{{ issue.assigned_to.name }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <pre>
-                    {{
-                        issue.description|length > 500 ?
-                        issue.description|slice(0, 500) ~ '...' :
-                        issue.description
-                    }}
-                    </pre>
-                </td>
-            </tr>
-        </table>
-    {% endif %}
+{% if newIssue %}
+    <p style="color: green;">
+        {% trans %}Создана задача{% endtrans %} <a target="_blank" href="{{ newIssue.url }}">{{ newIssue.url }}</a>
+    </p>
+{% endif %}
+{% if issue %}
+    <div class="card">
+        <div class="card-header">
+            <table class="issue-table">
+                <tr>
+                    <td colspan="2">
+                        <b>
+                            <a target="_blank" href="{{ issue.url }}">{{ issue.subject }}</a>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{% trans %}status{% endtrans %}</td>
+                    <td>{{ issue.status.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Project{% endtrans %}</td>
+                    <td>{{ issue.project.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}Tracker{% endtrans %}</td>
+                    <td>{{ issue.tracker.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}priority{% endtrans %}</td>
+                    <td>{{ issue.priority.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}author{% endtrans %}</td>
+                    <td>{{ issue.author.name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans %}assigned_to{% endtrans %}</td>
+                    <td>{{ issue.assigned_to.name }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-body">
+            <pre>
+                {{
+                    issue.description|length > 500 ?
+                    issue.description|slice(0, 500) ~ '...' :
+                    issue.description
+                }}
+            </pre>
+        </div>
+    </div>
+{% endif %}
 
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
 
-    {{ form_start(form) }}
+<br>
 
+{{ form_start(form) }}
 
-    <h4>Clone issue</h4>
     {% if form.issue.vars.value %}
         <div style="display: none;">
             {{ form_row(form.issue) }}
@@ -82,6 +87,5 @@
 
     {{ form_row(form.submit) }}
 
-    {{ form_end(form) }}
-</div>
+{{ form_end(form) }}
 {% endblock %}
