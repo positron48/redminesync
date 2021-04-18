@@ -16,7 +16,11 @@ class CloneIssueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('issue', TextType::class)
+            ->add('issue', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'External issue link or id',
+                )
+            ])
             ->add('tracker', ChoiceType::class, [
                 'choices' => $options['trackers'],
                 'placeholder' => 'Choose a tracker',
