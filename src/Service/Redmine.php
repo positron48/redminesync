@@ -4,20 +4,25 @@
 namespace App\Service;
 
 
+use App\Entity\RedmineUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class Redmine
 {
     protected $entityManager;
     protected $url;
     protected $externalUrl;
+    protected $security;
 
-    public function __construct(EntityManagerInterface $entityManager, ContainerBagInterface $containerBag)
+    public function __construct(EntityManagerInterface $entityManager, ContainerBagInterface $containerBag, Security $security)
     {
         $this->entityManager = $entityManager;
         $this->url = $containerBag->get("redmine_url");
         $this->externalUrl = $containerBag->get("external_redmine_url");
+        $this->security = $security;
     }
 
     public function getUserData($username, $password, $primaryRedmine = true)
@@ -26,20 +31,20 @@ class Redmine
         return $redmine->user->getCurrentUser();
     }
 
-    public function getDictionaries($token)
+    public function getDictionaries($projectId = null)
     {
-        $redmine = new \Redmine\Client($this->url, $token);
-        $projects = self::getProjects($redmine);
-        $trackers = self::getTrackers($redmine);
-        $statuses = self::getStatuses($redmine);
-        $employers = self::getEmployers($redmine, $projects['Multisite']);
+        $redmine = new \Redmine\Client($this->url, $this->security->getUser()->getToken());
+        $projects = $this->getProjects($redmine);
+        $trackers = $this->getTrackers($redmine);
+        $statuses = $this->getStatuses($redmine);
+        $employers = $this->getEmployers($projectId ?: $projects['Multisite'], $redmine);
 
         return compact('projects', 'trackers', 'statuses', 'employers');
     }
 
-    public function getExernalIssueData($issueId, $externalRedmineToken)
+    public function getExernalIssueData($issueId)
     {
-        $redmine = new \Redmine\Client($this->externalUrl, $externalRedmineToken);
+        $redmine = new \Redmine\Client($this->externalUrl, $this->security->getUser()->getExternalRedmineToken());
         $issue = $redmine->issue->show($issueId, [
             'include' => ['attachments']
         ]);
@@ -50,9 +55,9 @@ class Redmine
         return $issue;
     }
 
-    public function createIssue($issue, $token, $externalRedmineToken)
+    public function createIssue($issue)
     {
-        $redmine = new \Redmine\Client($this->url, $token);
+        $redmine = new \Redmine\Client($this->url, $this->security->getUser()->getToken());
 
         $uploads = [];
         if(isset($issue['attachments'])) {
@@ -63,7 +68,7 @@ class Redmine
                     'description' => $attachment['description']
                 ];
 
-                $attachment['content_url'] .= '?key=' . $externalRedmineToken;
+                $attachment['content_url'] .= '?key=' . $this->security->getUser()->getExternalRedmineToken();
                 $upload = $redmine->attachment->upload(
                     file_get_contents($attachment['content_url'])
                 );
@@ -99,7 +104,7 @@ class Redmine
      * @param \Redmine\Client $redmine
      * @return array
      */
-    protected static function getProjects(\Redmine\Client $redmine): array
+    protected function getProjects(\Redmine\Client $redmine): array
     {
         $data = $redmine->project->all(['limit' => 200]);
         $data = array_combine(
@@ -114,7 +119,7 @@ class Redmine
      * @param \Redmine\Client $redmine
      * @return array
      */
-    protected static function getTrackers(\Redmine\Client $redmine): array
+    protected function getTrackers(\Redmine\Client $redmine): array
     {
         $data = $redmine->tracker->all();
         $data = array_combine(
@@ -129,7 +134,7 @@ class Redmine
      * @param \Redmine\Client $redmine
      * @return array
      */
-    protected static function getStatuses(\Redmine\Client $redmine): array
+    protected function getStatuses(\Redmine\Client $redmine): array
     {
         $data = $redmine->issue_status->all();
         $data = array_combine(
@@ -144,8 +149,11 @@ class Redmine
      * @param \Redmine\Client $redmine
      * @return array
      */
-    protected static function getEmployers(\Redmine\Client $redmine, $projectId): array
+    public function getEmployers($projectId, ?\Redmine\Client $redmine = null): array
     {
+        if($redmine === null) {
+            $redmine = new \Redmine\Client($this->url, $this->security->getUser()->getToken());
+        }
         $data = $redmine->membership->all($projectId);
         foreach ($data['memberships'] as $membership) {
             $result[$membership['user']['name']] = $membership['user']['id'];

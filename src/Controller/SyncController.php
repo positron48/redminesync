@@ -21,6 +21,7 @@ class SyncController extends AbstractController
     {
         /** @var RedmineUser $user */
         $user = $this->getUser();
+
         if(!$user){
             return $this->redirectToRoute('login');
         }
@@ -29,7 +30,11 @@ class SyncController extends AbstractController
             return $this->redirectToRoute('settings');
         }
 
-        $dictionaries = $redmine->getDictionaries($user->getToken());
+        $projectId = null;
+        if(is_array($request->get('clone_issue')) && isset($request->get('clone_issue')['project'])){
+            $projectId = $request->get('clone_issue')['project'];
+        }
+        $dictionaries = $redmine->getDictionaries($projectId);
         $form = $this->createForm(CloneIssueType::class, [], $dictionaries);
 
         $form->handleRequest($request);
@@ -44,7 +49,7 @@ class SyncController extends AbstractController
                 preg_match('#(^|/)(\d+)#', $formData['issue'], $matches);
                 $issueId = $matches[2];
                 if($issueId > 0) {
-                    $issue = $redmine->getExernalIssueData($issueId, $user->getExternalRedmineToken());
+                    $issue = $redmine->getExernalIssueData($issueId);
                     if($issue) {
                         if($formData['tracker'] > 0 && $formData['project'] > 0) {
                             $newIssue = [
@@ -62,12 +67,8 @@ class SyncController extends AbstractController
                                 $newIssue['attachments'] = $issue['attachments'];
                             }
 
-                            $newIssue = $redmine->createIssue(
-                                $newIssue,
-                                $user->getToken(),
-                                $user->getExternalRedmineToken()
-                            );
-                            if($newIssue) {
+                            $newIssue = $redmine->createIssue($newIssue);
+                            if(isset($newIssue['id'])) {
                                 $form = $this->createForm(CloneIssueType::class, [], $dictionaries);
                             }
                         } else {

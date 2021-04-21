@@ -10,9 +10,15 @@
 </style>
 
 {% if newIssue %}
-    <p style="color: green;">
-        {% trans %}Создана задача{% endtrans %} <a target="_blank" href="{{ newIssue.url }}">#{{ newIssue.id }} {{ issue.subject }}</a>
-    </p>
+    {% if newIssue.url is defined %}
+        <p style="color: green;">
+            {% trans %}Создана задача{% endtrans %} <a target="_blank" href="{{ newIssue.url }}">#{{ newIssue.id }} {{ issue.subject }}</a>
+        </p>
+    {% else %}
+        <p style="color: red;">
+            {% trans %}Произошла ошибка{% endtrans %} #{{ newIssue.status }} {{ newIssue.error }}
+        </p>
+    {% endif %}
 {% endif %}
 {% if issue %}
     <div class="card">
@@ -92,4 +98,9 @@
     {{ form_row(form.submit) }}
 
 {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sync') }}
 {% endblock %}
