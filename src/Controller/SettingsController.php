@@ -42,9 +42,10 @@ class SettingsController extends AbstractController
                 $user->setExternalRedmineToken($userData['user']['api_key']);
                 $entityManager->persist($user);
                 $entityManager->flush();
-            } else {
-                $error = 'Invalid credentials';
+
+                return $this->redirectToRoute('index');
             }
+            $error = 'Invalid credentials';
         }
 
         return $this->render('settings/index.html.twig', [
