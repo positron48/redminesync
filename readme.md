@@ -2,6 +2,10 @@
 
 Redmine sync service - migrate issues from one server to another.
 
+## requirements
+
+node <=14 (node-sass)
+
 ## install
 
 ```bash
