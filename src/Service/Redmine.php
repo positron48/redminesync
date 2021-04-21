@@ -55,31 +55,33 @@ class Redmine
         $redmine = new \Redmine\Client($this->url, $token);
 
         $uploads = [];
-        foreach ($issue['attachments'] as $attachment) {
-            $item = [
-                'filename' => $attachment['filename'],
-                'content_type' => $attachment['content_type'],
-                'description' => $attachment['description']
-            ];
+        if(isset($issue['attachments'])) {
+            foreach ($issue['attachments'] as $attachment) {
+                $item = [
+                    'filename' => $attachment['filename'],
+                    'content_type' => $attachment['content_type'],
+                    'description' => $attachment['description']
+                ];
 
-            $attachment['content_url'] .= '?key=' . $externalRedmineToken;
-            $upload = $redmine->attachment->upload(
-                file_get_contents($attachment['content_url'])
-            );
+                $attachment['content_url'] .= '?key=' . $externalRedmineToken;
+                $upload = $redmine->attachment->upload(
+                    file_get_contents($attachment['content_url'])
+                );
 
-            if($upload[0] === '{'){
-                $upload = json_decode($upload, true);
+                if ($upload[0] === '{') {
+                    $upload = json_decode($upload, true);
+                }
+
+                if (isset($upload['upload'])) {
+                    $item['token'] = $upload['upload']['token'];
+                    $uploads[] = $item;
+                }
             }
 
-            if(isset($upload['upload'])){
-                $item['token'] = $upload['upload']['token'];
-                $uploads[] = $item;
+            if(count($uploads)) {
+                $issue['uploads'] = $uploads;
+                unset($issue['attachments']);
             }
-        }
-
-        if(count($uploads)) {
-            $issue['uploads'] = $uploads;
-            unset($issue['attachments']);
         }
 
         $newIssue = $redmine->issue->create($issue);
