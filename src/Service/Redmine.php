@@ -80,8 +80,8 @@ class Redmine
 
             if(count($uploads)) {
                 $issue['uploads'] = $uploads;
-                unset($issue['attachments']);
             }
+            unset($issue['attachments']);
         }
 
         $newIssue = $redmine->issue->create($issue);
