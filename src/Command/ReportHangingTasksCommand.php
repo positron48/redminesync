@@ -46,7 +46,7 @@ class ReportHangingTasksCommand extends Command
         $limitTasks = 1000;
 
         $intaroManagers = [
-            1808 => ['INVENTIVE_ID' => 426, 'COLOR' => 'Olive', 'NAME' => 'Египко Владимир'], // Египко Владимир
+            //1808 => ['INVENTIVE_ID' => 426, 'COLOR' => 'Olive', 'NAME' => 'Египко Владимир'], // Египко Владимир
             1986 => ['INVENTIVE_ID' => 632, 'COLOR' => 'Goldenrod', 'NAME' => 'Курасова Маргорита'], // Курасова Маргорита
             2081 => ['INVENTIVE_ID' => 672, 'COLOR' => 'FireBrick', 'NAME' => 'Гвоздецкий Михаил'] // Гвоздецкий Михаил
         ];
