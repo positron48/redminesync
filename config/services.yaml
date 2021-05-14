@@ -5,7 +5,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     redmine_url: '%env(REDMINE_URL)%'
+    redmine_report_key: '%env(REDMINE_REPORT_KEY)%'
     external_redmine_url: '%env(EXTERNAL_REDMINE_URL)%'
+    external_redmine_report_key: '%env(EXTERNAL_REDMINE_REPORT_KEY)%'
+    report_emails: '%env(REPORT_EMAILS)%'
 
 services:
     # default configuration for services in *this* file
