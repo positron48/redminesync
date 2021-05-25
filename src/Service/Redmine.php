@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\RedmineUser;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,13 +17,19 @@ class Redmine
     protected $url;
     protected $externalUrl;
     protected $security;
+    protected $logger;
 
-    public function __construct(EntityManagerInterface $entityManager, ContainerBagInterface $containerBag, Security $security)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ContainerBagInterface $containerBag,
+        Security $security,
+        LoggerInterface $logger
+    ) {
         $this->entityManager = $entityManager;
         $this->url = $containerBag->get("redmine_url");
         $this->externalUrl = $containerBag->get("external_redmine_url");
         $this->security = $security;
+        $this->logger = $logger;
     }
 
     public function getUserData($username, $password, $primaryRedmine = true)
@@ -72,6 +79,8 @@ class Redmine
                 $upload = $redmine->attachment->upload(
                     file_get_contents($attachment['content_url'])
                 );
+                $this->logger->info('upload file request', $item);
+                $this->logger->info('upload file result', $upload);
 
                 if ($upload[0] === '{') {
                     $upload = json_decode($upload, true);
@@ -90,6 +99,9 @@ class Redmine
         }
 
         $newIssue = $redmine->issue->create($issue);
+        $this->logger->info('create issue request', $issue);
+        $this->logger->info('create issue result', $newIssue);
+
 
         $con = json_encode($newIssue);
         $newIssue = json_decode($con, true);

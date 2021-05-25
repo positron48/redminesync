@@ -17,7 +17,7 @@ class SyncController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Request $request, Redmine $redmine, ContainerBagInterface $containerBag): Response
+    public function index(Request $request, Redmine $redmine): Response
     {
         /** @var RedmineUser $user */
         $user = $this->getUser();
