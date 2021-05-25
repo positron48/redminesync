@@ -100,7 +100,7 @@ class Redmine
 
         $newIssue = $redmine->issue->create($issue);
         $this->logger->info('create issue request', [$issue]);
-        $this->logger->info('create issue result', [$newIssue]);
+        $this->logger->info('create issue result', [$newIssue->asXML()]);
 
 
         $con = json_encode($newIssue);
