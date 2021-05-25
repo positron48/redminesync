@@ -79,8 +79,8 @@ class Redmine
                 $upload = $redmine->attachment->upload(
                     file_get_contents($attachment['content_url'])
                 );
-                $this->logger->info('upload file request', $item);
-                $this->logger->info('upload file result', $upload);
+                $this->logger->info('upload file request', [$item]);
+                $this->logger->info('upload file result', [$upload]);
 
                 if ($upload[0] === '{') {
                     $upload = json_decode($upload, true);
@@ -99,8 +99,8 @@ class Redmine
         }
 
         $newIssue = $redmine->issue->create($issue);
-        $this->logger->info('create issue request', $issue);
-        $this->logger->info('create issue result', $newIssue);
+        $this->logger->info('create issue request', [$issue]);
+        $this->logger->info('create issue result', [$newIssue]);
 
 
         $con = json_encode($newIssue);
