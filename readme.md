@@ -14,3 +14,15 @@ php bin/console doctrine:migrations:migrate
 yarn install
 yarn build
 ```
+
+## docker
+
+```bash
+docker volume create --name=postgres_redminesync
+make up
+docker-compose exec php bin/console doctrine:database:create
+docker-compose exec php bin/console doctrine:schema:create
+docker-compose run encore yarn install
+make encore_dev
+```
+Server is accessible on 127.0.0.1
