@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d3178fa424f6a7e3c206bf327e9a63f5",
+    "content-hash": "62f55fb02a782b35cdd89b16ba562f06",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -1279,59 +1279,6 @@
             "time": "2021-05-22T16:11:15+00:00"
         },
         {
-            "name": "kbsali/redmine-api",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kbsali/php-redmine-api.git",
-                "reference": "401c2fac88f558dbc56d9e03636d8d323901729d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kbsali/php-redmine-api/zipball/401c2fac88f558dbc56d9e03636d8d323901729d",
-                "reference": "401c2fac88f558dbc56d9e03636d8d323901729d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "ext-simplexml": "*",
-                "php": "^7.4 || ^8.0",
-                "psr/http-client": "^1.0",
-                "psr/http-factory": "^1.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "guzzlehttp/psr7": "^1.7",
-                "php-mock/php-mock-phpunit": "^2.6",
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Redmine\\": "src/Redmine/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kevin Saliou",
-                    "email": "kevin@saliou.name",
-                    "homepage": "http://kevin.saliou.name"
-                }
-            ],
-            "description": "Redmine API client",
-            "homepage": "https://github.com/kbsali/php-redmine-api",
-            "keywords": [
-                "api",
-                "redmine"
-            ],
-            "time": "2021-04-19T09:18:44+00:00"
-        },
-        {
             "name": "laminas/laminas-code",
             "version": "4.3.0",
             "source": {
@@ -1571,6 +1518,57 @@
                 "psr-3"
             ],
             "time": "2020-12-14T13:15:25+00:00"
+        },
+        {
+            "name": "positron48/redmine-api",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/positron48/php-redmine-api.git",
+                "reference": "ec85edd7d03521477551b17c169bd48e20447233"
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "php": "^7.4 || ^8.0",
+                "psr/http-client": "^1.0",
+                "psr/http-factory": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "guzzlehttp/psr7": "^1.7",
+                "php-mock/php-mock-phpunit": "^2.6",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Redmine\\": "src/Redmine/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Redmine\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Saliou",
+                    "email": "kevin@saliou.name",
+                    "homepage": "http://kevin.saliou.name"
+                }
+            ],
+            "description": "Redmine API client",
+            "homepage": "https://github.com/positron48/php-redmine-api",
+            "keywords": [
+                "api",
+                "redmine"
+            ],
+            "time": "2021-05-29T10:05:26+00:00"
         },
         {
             "name": "psr/cache",
@@ -5741,7 +5739,8 @@
     "platform": {
         "php": ">=7.2.5",
         "ext-ctype": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-json": "*"
     },
     "platform-dev": []
 }

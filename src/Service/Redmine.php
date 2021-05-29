@@ -100,16 +100,14 @@ class Redmine
 
         $newIssue = $redmine->issue->create($issue);
         $this->logger->info('create issue request', [$issue]);
-        $this->logger->info('create issue result', [$newIssue->asXML()]);
+        $this->logger->info('create issue result', [$newIssue]);
 
+        $newIssue = json_decode($newIssue, true);
 
-        $con = json_encode($newIssue);
-        $newIssue = json_decode($con, true);
-
-        if(isset($newIssue['id'])) {
-            $newIssue['url'] = $this->url . "/issues/" . $newIssue['id'];
+        if(isset($newIssue['issue'])) {
+            $newIssue['issue']['url'] = $this->url . "/issues/" . $newIssue['issue']['id'];
         }
-        return $newIssue ?? [];
+        return $newIssue['issue'] ?? [];
     }
 
     /**

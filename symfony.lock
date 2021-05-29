@@ -101,7 +101,7 @@
         "version": "v1.0.3"
     },
     "kbsali/redmine-api": {
-        "version": "v1.7.0"
+        "version": "v1.8.0"
     },
     "laminas/laminas-code": {
         "version": "3.4.1"
@@ -120,6 +120,9 @@
     },
     "php": {
         "version": "7.4"
+    },
+    "positron48/redmine-api": {
+        "version": "1.8.1"
     },
     "psr/cache": {
         "version": "1.0.1"
