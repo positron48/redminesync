@@ -180,6 +180,7 @@ class ReportHangingTasksCommand extends Command
         $subject = 'Подвисшие задачи проекта мультисайт';
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= "From: redsync@env.skillum.ru \r\n";
         $headers .= 'Content-type: text/html; utf-8' . "\r\n";
 
         $mailResult = mail($address, $subject, $message, $headers);
