@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td>{% trans %}assigned_to{% endtrans %}</td>
-                    <td>{{ issue.assigned_to.name }}</td>
+                    <td>{% if issue.assigned_to is defined %}{{ issue.assigned_to.name }}{% endif %}</td>
                 </tr>
             </table>
         </div>
