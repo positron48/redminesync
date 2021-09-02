@@ -48,7 +48,8 @@ class ReportHangingTasksCommand extends Command
         $intaroManagers = [
             //1808 => ['INVENTIVE_ID' => 426, 'COLOR' => 'Olive', 'NAME' => 'Египко Владимир'], // Египко Владимир
             1986 => ['INVENTIVE_ID' => 632, 'COLOR' => 'Goldenrod', 'NAME' => 'Курасова Маргарита'], // Курасова Маргорита
-            2081 => ['INVENTIVE_ID' => 672, 'COLOR' => 'FireBrick', 'NAME' => 'Гвоздецкий Михаил'] // Гвоздецкий Михаил
+            2081 => ['INVENTIVE_ID' => 672, 'COLOR' => 'FireBrick', 'NAME' => 'Гвоздецкий Михаил'], // Гвоздецкий Михаил
+            2244 => ['INVENTIVE_ID' => 834, 'COLOR' => 'forestgreen', 'NAME' => 'Жидков Эдуард'], // Жидков Эдуард
         ];
 
         $intaroClient = new \Redmine\Client($intaroRedmineURLMult, $intaroRedmineApiKey);
