@@ -4,8 +4,150 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62f55fb02a782b35cdd89b16ba562f06",
+    "content-hash": "75a70fd91712d837f7747b6291e0c856",
     "packages": [
+        {
+            "name": "avdeevsv91/server_yametrika",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avdeevsv91/server_yametrika.git",
+                "reference": "98227ed5b1525622b10b5b0183db5d7ee86e6821"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avdeevsv91/server_yametrika/zipball/98227ed5b1525622b10b5b0183db5d7ee86e6821",
+                "reference": "98227ed5b1525622b10b5b0183db5d7ee86e6821",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ServerYaMetrika\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Seleznev",
+                    "email": "hcodes@yandex.ru"
+                },
+                {
+                    "name": "Sergey Avdeev",
+                    "email": "avdeevsv91@gmail.com"
+                }
+            ],
+            "description": "Server-side tracking of visitors using Yandex.Metrika",
+            "homepage": "https://github.com/avdeevsv91/server_yametrika",
+            "keywords": [
+                "yandex-metrika"
+            ],
+            "support": {
+                "source": "https://github.com/avdeevsv91/server_yametrika/tree/v1.0.4"
+            },
+            "abandoned": true,
+            "time": "2019-09-23T10:36:13+00:00"
+        },
+        {
+            "name": "avdeevsv91/yandex-dialogs-php",
+            "version": "v0.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avdeevsv91/yandex-dialogs-php.git",
+                "reference": "04ffb53db98901c46f5c780bd5d5bf1de9b38c29"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avdeevsv91/yandex-dialogs-php/zipball/04ffb53db98901c46f5c780bd5d5bf1de9b38c29",
+                "reference": "04ffb53db98901c46f5c780bd5d5bf1de9b38c29",
+                "shasum": ""
+            },
+            "require": {
+                "avdeevsv91/server_yametrika": "~1.0.3",
+                "bhavyanshu/chatbase-php": "~1.2.0",
+                "pburggraf/crc": "~0.5.4",
+                "php": ">=7.0",
+                "umisoft/phpmorphy": "~1.0.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "YandexStation\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Avdeev",
+                    "email": "avdeevsv91@gmail.com"
+                }
+            ],
+            "description": "PHP library for the development skills of Yandex.Alice",
+            "homepage": "https://github.com/avdeevsv91/yandex-dialogs-php",
+            "keywords": [
+                "yandex-alice",
+                "yandex-dialogs"
+            ],
+            "support": {
+                "issues": "https://github.com/avdeevsv91/yandex-dialogs-php/issues",
+                "source": "https://github.com/avdeevsv91/yandex-dialogs-php/tree/master"
+            },
+            "abandoned": true,
+            "time": "2019-12-28T16:35:54+00:00"
+        },
+        {
+            "name": "bhavyanshu/chatbase-php",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/bhavyanshu/chatbase-php.git",
+                "reference": "9e99b7f55f4f195326aec1a2b2b5fda554571b68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/bhavyanshu%2Fchatbase-php/repository/archive.zip?sha=9e99b7f55f4f195326aec1a2b2b5fda554571b68",
+                "reference": "9e99b7f55f4f195326aec1a2b2b5fda554571b68",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3|^5.6|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.7|^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ChatbaseAPI\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bhavyanshu Parasher",
+                    "email": "bhavyanshu.spl@gmail.com"
+                }
+            ],
+            "description": "A PHP library for the Chatbase API that helps you integrate chatbase with your PHP app. Note: This is not an official Google product.",
+            "homepage": "https://gitlab.com/bhavyanshu/chatbase-php",
+            "keywords": [
+                "bot-analytics",
+                "chatbase"
+            ],
+            "time": "2019-02-10T03:27:51+00:00"
+        },
         {
             "name": "composer/package-versions-deprecated",
             "version": "1.11.99.1",
@@ -1518,6 +1660,61 @@
                 "psr-3"
             ],
             "time": "2020-12-14T13:15:25+00:00"
+        },
+        {
+            "name": "pburggraf/crc",
+            "version": "v0.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pburggraf/CRC.git",
+                "reference": "c2bf4bed7270496301d74213a48c4fead559721e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pburggraf/CRC/zipball/c2bf4bed7270496301d74213a48c4fead559721e",
+                "reference": "c2bf4bed7270496301d74213a48c4fead559721e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "~0.9",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PBurggraf\\CRC\\": "src/PBurggraf/CRC/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Philip Burggraf",
+                    "email": "philip@pburggraf.de"
+                }
+            ],
+            "description": "Cyclic redundancy checker (crc) class to calculate crc8, crc16, crc24 and crc32 checksum values",
+            "keywords": [
+                "checksum",
+                "checksum generator",
+                "crc",
+                "crc16",
+                "crc24",
+                "crc32",
+                "crc8",
+                "cyclic redundancy checker",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/pburggraf/CRC/issues",
+                "source": "https://github.com/pburggraf/CRC/tree/v0.5.4"
+            },
+            "time": "2018-09-27T18:49:05+00:00"
         },
         {
             "name": "positron48/redmine-api",
@@ -5422,6 +5619,47 @@
                 "templating"
             ],
             "time": "2021-05-16T12:14:13+00:00"
+        },
+        {
+            "name": "umisoft/phpmorphy",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Umisoft/phpmorphy.git",
+                "reference": "91e13dbbdb439fee62f31890de27e88b1d432087"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Umisoft/phpmorphy/zipball/91e13dbbdb439fee62f31890de27e88b1d432087",
+                "reference": "91e13dbbdb439fee62f31890de27e88b1d432087",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "phpMorphy": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GNU GPL 2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Kamaev Vladimir",
+                    "email": "heromantor@users.sourceforge.net"
+                }
+            ],
+            "description": "phpMorphy - morphological analyzer library for Russisan, English and German languages",
+            "homepage": "http://phpmorphy.sourceforge.net/",
+            "keywords": [
+                "phpmorphy"
+            ],
+            "support": {
+                "source": "https://github.com/Umisoft/phpmorphy/tree/1.0.1"
+            },
+            "abandoned": true,
+            "time": "2014-07-21T15:22:40+00:00"
         }
     ],
     "packages-dev": [
@@ -5742,5 +5980,6 @@
         "ext-iconv": "*",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.1.0"
 }

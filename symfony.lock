@@ -1,4 +1,13 @@
 {
+    "avdeevsv91/server_yametrika": {
+        "version": "v1.0.4"
+    },
+    "avdeevsv91/yandex-dialogs-php": {
+        "version": "v0.2.2"
+    },
+    "bhavyanshu/chatbase-php": {
+        "version": "v1.2.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -117,6 +126,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "pburggraf/crc": {
+        "version": "v0.5.4"
     },
     "php": {
         "version": "7.4"
@@ -452,5 +464,8 @@
     },
     "twig/twig": {
         "version": "v3.3.0"
+    },
+    "umisoft/phpmorphy": {
+        "version": "1.0.1"
     }
 }

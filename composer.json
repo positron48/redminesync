@@ -7,6 +7,8 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
+        "avdeevsv91/yandex-dialogs-php": "^0.2.2",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.12",
         "doctrine/doctrine-bundle": "^2.3",
@@ -27,8 +29,7 @@
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0",
-        "ext-json": "*"
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "optimize-autoloader": true,
