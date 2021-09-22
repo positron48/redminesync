@@ -70,6 +70,8 @@ class AlisaController extends AbstractController
             // Отправляем ответ и завершаем работу скрипта
             $alice->finish();
             exit;
+        } else {
+            return new Response('no request');
         }
     }
 }
