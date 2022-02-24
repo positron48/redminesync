@@ -44,7 +44,11 @@ class Redmine
         $projects = $this->getProjects($redmine);
         $trackers = $this->getTrackers($redmine);
         $statuses = $this->getStatuses($redmine);
-        $employers = $this->getEmployers($projectId ?: $projects['Multisite'], $redmine);
+        if($projectId || isset($projects['Multisite'])) {
+            $employers = $this->getEmployers($projectId ?: $projects['Multisite'], $redmine);
+        } else {
+            $employers = [];
+        }
 
         return compact('projects', 'trackers', 'statuses', 'employers');
     }
