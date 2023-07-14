@@ -168,7 +168,7 @@ class Redmine
         if($redmine === null) {
             $redmine = new \Redmine\Client($this->url, $this->security->getUser()->getToken());
         }
-        $data = $redmine->membership->all($projectId);
+        $data = $redmine->membership->all($projectId, ['limit' => 200]);
         foreach ($data['memberships'] as $membership) {
             $result[$membership['user']['name']] = $membership['user']['id'];
         }
