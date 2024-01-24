@@ -122,7 +122,7 @@ class Redmine
     {
         $data = $redmine->project->all(['limit' => 200]);
 
-        $data = array_filter($data['projects'], function($item) {
+        $data['projects'] = array_filter($data['projects'], function($item) {
             return in_array($item['name'], ['Бауцентр', 'Baucenter-RetailCRM', 'Сайт 2.0', 'Сервис персональных цен (PPS)']);
         });
 
