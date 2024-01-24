@@ -180,4 +180,13 @@ class Redmine
         ksort($result);
         return $result;
     }
+
+    public function updateExternalIssue(string $issueId, array $array)
+    {
+        $redmine = new \Redmine\Client($this->externalUrl, $this->security->getUser()->getExternalRedmineToken());
+        $result = $redmine->issue->update($issueId, $array);
+        $this->logger->info('update issue request', [$issueId, $array]);
+        $this->logger->info('update issue result', [$result]);
+        return $result;
+    }
 }

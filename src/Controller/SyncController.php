@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SyncController extends AbstractController
 {
+    const CUSTOM_FIELD_ID_EXTERNAL_LINK = 26;
+
     /**
      * @Route("/", name="index")
      */
@@ -57,8 +59,7 @@ class SyncController extends AbstractController
                                 'project_id' => $formData['project'],
                                 'status_id' => $formData['status'],
                                 'subject' => $issue['subject'],
-                                'description' => "Задача: " . $issue['url'] . "\r\n\r\n" .
-                                    $issue['description']
+                                'description' => $issue['description']
                             ];
                             if($formData['employer'] > 0){
                                 $newIssue['assigned_to_id'] = $formData['employer'];
@@ -66,10 +67,25 @@ class SyncController extends AbstractController
                             if($issue['attachments']){
                                 $newIssue['attachments'] = $issue['attachments'];
                             }
+                            // set custom field values
+                            $newIssue['custom_fields'][] = [
+                                'id' => self::CUSTOM_FIELD_ID_EXTERNAL_LINK,
+                                'value' => $issue['url']
+                            ];
 
                             $newIssue = $redmine->createIssue($newIssue);
                             if(isset($newIssue['id'])) {
                                 $form = $this->createForm(CloneIssueType::class, [], $dictionaries);
+
+                                // update issue in external redmine - set custom field value
+                                $redmine->updateExternalIssue($issueId, [
+                                    'custom_fields' => [
+                                        [
+                                            'id' => self::CUSTOM_FIELD_ID_EXTERNAL_LINK,
+                                            'value' => $this->getParameter('redmine_url') . "/issues/" . $newIssue['id']
+                                        ]
+                                    ]
+                                ]);
                             }
                         } else {
 
