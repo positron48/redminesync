@@ -44,8 +44,8 @@ class Redmine
         $projects = $this->getProjects($redmine);
         $trackers = $this->getTrackers($redmine);
         $statuses = $this->getStatuses($redmine);
-        if($projectId || isset($projects['Multisite'])) {
-            $employers = $this->getEmployers($projectId ?: $projects['Multisite'], $redmine);
+        if($projectId || isset($projects['Бауцентр'])) {
+            $employers = $this->getEmployers($projectId ?: $projects['Бауцентр'], $redmine);
         } else {
             $employers = [];
         }
@@ -121,6 +121,11 @@ class Redmine
     protected function getProjects(\Redmine\Client $redmine): array
     {
         $data = $redmine->project->all(['limit' => 200]);
+
+        $data = array_filter($data['projects'], function($item) {
+            return in_array($item['name'], ['Бауцентр', 'Baucenter-RetailCRM', 'Сайт 2.0', 'Сервис персональных цен (PPS)']);
+        });
+
         $data = array_combine(
             array_column($data['projects'], 'name'),
             array_column($data['projects'], 'id')
