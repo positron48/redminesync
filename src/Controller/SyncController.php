@@ -77,8 +77,8 @@ class SyncController extends AbstractController
                             $formData['tracker'] = isset($dictionaries['trackers']['Разработка']) ?
                                 $dictionaries['trackers']['Разработка'] :
                                 null;
-                            $formData['project'] = isset($dictionaries['projects']['Multisite']) ?
-                                $dictionaries['projects']['Multisite'] :
+                            $formData['project'] = isset($dictionaries['projects']['Бауцентр']) ?
+                                $dictionaries['projects']['Бауцентр'] :
                                 null;
                             $formData['status'] = isset($dictionaries['statuses']['Новый']) ?
                                 $dictionaries['statuses']['Новый'] :
